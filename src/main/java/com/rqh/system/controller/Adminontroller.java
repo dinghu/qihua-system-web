@@ -64,8 +64,8 @@ public class Adminontroller {
         //登录成功后 ；分配uuid；存在则不分配
         if (TextUtils.isBlank(admin1.getUuid())) {
             admin1.setUuid(UUIDUtils.getUUID());
+            adminService.updateByPrimaryKey(admin);//设置uuid
         }
-
         HashMap<String, String> data = new HashMap<>();
         data.put("uuid", admin1.getUuid());
         return new ResultBean("200", "登陆成功", data, true);

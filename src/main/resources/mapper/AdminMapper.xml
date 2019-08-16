@@ -1,27 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rqh.system.mapper.AdminMapper">
-  <resultMap id="BaseResultMap" type="com.rqh.system.domain.Admin">
-    <result column="admin" jdbcType="VARCHAR" property="admin" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="id" jdbcType="INTEGER" property="id" />
-  </resultMap>
-  <insert id="insert" parameterType="com.rqh.system.domain.Admin">
+    <resultMap id="BaseResultMap" type="com.rqh.system.domain.Admin">
+        <result column="admin" jdbcType="VARCHAR" property="admin"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="id" jdbcType="INTEGER" property="id"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.rqh.system.domain.Admin">
     insert into admin (admin, password, id
       )
     values (#{admin,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}
       )
   </insert>
-  <select id="selectAll" resultMap="BaseResultMap">
+    <select id="selectAll" resultMap="BaseResultMap">
     select admin, password, id
     from admin =
   </select>
 
-  <select id="selectByAdmin" resultMap="BaseResultMap" parameterType="com.rqh.system.domain.Admin">
+    <select id="selectByAdmin" resultMap="BaseResultMap" parameterType="com.rqh.system.domain.Admin">
   select admin, password, id
   from admin
   where admin = #{admin,jdbcType=VARCHAR}
   and password = #{password,jdbcType=VARCHAR}
 
   </select>
+
+    <update id="updateByPrimaryKey" parameterType="com.rqh.system.domain.Teachers">
+        update admin
+        <set>
+            <if test="admin != null">
+                admin = #{admin,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null and password != '' ">
+                password=#{password,jdbcType=VARCHAR},
+            </if>
+            <if test="uuid != null and uuid != '' ">
+                uuid=#{uuid,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>
