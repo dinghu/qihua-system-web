@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rqh.system.mapper.TeachersMapper">
+  <resultMap id="BaseResultMap" type="com.rqh.system.domain.Teachers">
+    <id column="t_id" jdbcType="INTEGER" property="tId" />
+    <id column="t_uuid" jdbcType="VARCHAR" property="tUuid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="nick" jdbcType="VARCHAR" property="nick" />
+    <result column="sex" jdbcType="BIT" property="sex" />
+    <result column="work_id" jdbcType="INTEGER" property="workId" />
+    <result column="nid" jdbcType="CHAR" property="nid" />
+    <result column="birth" jdbcType="DATE" property="birth" />
+    <result column="hiredate" jdbcType="TIMESTAMP" property="hiredate" />
+    <result column="phone" jdbcType="CHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="place" jdbcType="VARCHAR" property="place" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
+    <result column="inv_code" jdbcType="CHAR" property="invCode" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from teachers
+    where t_id = #{tId,jdbcType=INTEGER}
+      and t_uuid = #{tUuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.rqh.system.domain.Teachers">
+    insert into teachers (t_id, t_uuid, name, 
+      nick, sex, work_id, 
+      nid, birth, hiredate, phone, 
+      email, place, last_time,inv_code
+      )
+    values (#{tId,jdbcType=INTEGER}, #{tUuid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{nick,jdbcType=VARCHAR}, #{sex,jdbcType=BIT}, #{workId,jdbcType=INTEGER},
+      #{nid,jdbcType=CHAR}, #{birth,jdbcType=DATE}, #{hiredate,jdbcType=TIMESTAMP}, #{phone,jdbcType=CHAR}, 
+      #{email,jdbcType=VARCHAR}, #{place,jdbcType=VARCHAR}, #{lastTime,jdbcType=TIMESTAMP},#{invCode,jdbcType=CHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.rqh.system.domain.Teachers">
+    update teachers
+    set name = #{name,jdbcType=VARCHAR},
+      nick = #{nick,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=BIT},
+      work_id = #{workId,jdbcType=INTEGER},
+      nid = #{nid,jdbcType=CHAR},
+      birth = #{birth,jdbcType=DATE},
+      hiredate = #{hiredate,jdbcType=TIMESTAMP},
+      phone = #{phone,jdbcType=CHAR},
+      email = #{email,jdbcType=VARCHAR},
+      place = #{place,jdbcType=VARCHAR},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
+      inv_code= #{invCode,jdbcType=CHAR}
+    where t_uuid = #{tUuid,jdbcType=VARCHAR}
+    and t_id = #{tId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    select t_id, t_uuid, name, nick, sex, work_id, nid, birth, hiredate, phone, email, 
+    place, last_time,inv_code
+    from teachers
+    where t_id = #{tId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUuId"  resultMap="BaseResultMap">
+    select t_id, t_uuid, name, nick, sex, work_id, nid, birth, hiredate, phone, email, 
+    place, last_time,inv_code
+    from teachers
+    where t_uuid = #{tUuid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByName" parameterType="java.lang.String"  resultMap="BaseResultMap">
+    select t_id, t_uuid, name, nick, sex, work_id, nid, birth, hiredate, phone, email,
+    place, last_time,inv_code
+    from teachers
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByNid" parameterType="java.lang.String"  resultMap="BaseResultMap">
+    select t_id, t_uuid, name, nick, sex, work_id, nid, birth, hiredate, phone, email,
+    place, last_time,inv_code
+    from teachers
+    where nid = #{nid,jdbcType=CHAR}
+  </select>
+  <select id="selectByInvCode" parameterType="java.lang.String"  resultMap="BaseResultMap">
+    select t_id, t_uuid, name, nick, sex, work_id, nid, birth, hiredate, phone, email,
+    place, last_time,inv_code
+    from teachers
+    where inv_code= #{invCode,jdbcType=CHAR}
+  </select>
+</mapper>

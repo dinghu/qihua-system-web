@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rqh.system.mapper.UserLogMapper">
+  <resultMap id="BaseResultMap" type="com.rqh.system.domain.UserLog">
+    <id column="u_uuid" jdbcType="VARCHAR" property="uUuid" />
+    <id column="u_id" jdbcType="INTEGER" property="uId" />
+    <result column="nick" jdbcType="VARCHAR" property="nick" />
+    <result column="head" jdbcType="VARCHAR" property="head" />
+    <result column="log_time" jdbcType="TIMESTAMP" property="logTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from user_log
+    where u_uuid = #{uUuid,jdbcType=VARCHAR}
+      and u_id = #{uId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rqh.system.domain.UserLog">
+    insert into user_log (u_uuid, u_id, nick, 
+      head, log_time)
+    values (#{uUuid,jdbcType=VARCHAR}, #{uId,jdbcType=INTEGER}, #{nick,jdbcType=VARCHAR}, 
+      #{head,jdbcType=VARCHAR}, #{logTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.rqh.system.domain.UserLog">
+    update user_log
+    set nick = #{nick,jdbcType=VARCHAR},
+      head = #{head,jdbcType=VARCHAR},
+      log_time = #{logTime,jdbcType=TIMESTAMP}
+    where u_uuid = #{uUuid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select u_uuid, u_id, nick, head, log_time
+    from user_log
+    where u_uuid = #{uUuid,jdbcType=VARCHAR}
+      and u_id = #{uId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUuid" parameterType="map" resultMap="BaseResultMap">
+    select u_uuid, u_id, nick, head, log_time
+    from user_log
+    where u_uuid = #{uUuid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select u_uuid, u_id, nick, head, log_time
+    from user_log
+  </select>
+</mapper>

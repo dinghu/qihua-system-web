@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rqh.system.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.rqh.system.domain.Student">
+    <id column="s_id" jdbcType="INTEGER" property="sId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="BIT" property="sex" />
+    <result column="nid" jdbcType="CHAR" property="nid" />
+    <result column="phone" jdbcType="CHAR" property="phone" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="graduate" jdbcType="VARCHAR" property="graduate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from student
+    where s_id = #{sId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rqh.system.domain.Student">
+    insert into student (s_id, name, sex, 
+      nid, phone, major, graduate
+      )
+    values (#{sId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=BIT},
+      #{nid,jdbcType=CHAR}, #{phone,jdbcType=CHAR}, #{major,jdbcType=VARCHAR}, #{graduate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.rqh.system.domain.Student">
+    update student
+    set name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=BIT},
+      nid = #{nid,jdbcType=CHAR},
+      phone = #{phone,jdbcType=CHAR},
+      major = #{major,jdbcType=VARCHAR},
+      graduate = #{graduate,jdbcType=VARCHAR}
+    where s_id = #{sId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select s_id, name, sex, nid, phone, major, graduate
+    from student
+    where s_id = #{sId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select s_id, name, sex, nid, phone, major, graduate
+    from student
+  </select>
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select s_id, name, sex, nid, phone, major, graduate
+    from student
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByNid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select s_id, name, sex, nid, phone, major, graduate
+    from student
+    where nid = #{nid,jdbcType=CHAR}
+  </select>
+</mapper>
