@@ -15,10 +15,21 @@ public class AdminServiceImpl implements AdminService {
     AdminMapper adminMapper;
 
     @Override
+    public int updateByPrimaryKey(Admin admin) {
+        try {
+            adminMapper.updateByPrimaryKey(admin);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 1;
+        }
+        return 0;
+    }
+
+    @Override
     public int insert(Admin record) {
         try {
             adminMapper.insert(record);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
         return 0;
@@ -28,19 +39,19 @@ public class AdminServiceImpl implements AdminService {
     public Admin selectByAdmin(Admin admin) {
         Admin admin1;
         try {
-           admin1 =  adminMapper.selectByAdmin(admin);
-        }catch (Exception e){
+            admin1 = adminMapper.selectByAdmin(admin);
+        } catch (Exception e) {
             throw e;
         }
         return admin1;
     }
 
     @Override
-    public List <Admin> selectAll() {
-        List<Admin> adminList = new ArrayList <>();
+    public List<Admin> selectAll() {
+        List<Admin> adminList = new ArrayList<>();
         try {
             adminList = adminMapper.selectAll();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
         return adminList;

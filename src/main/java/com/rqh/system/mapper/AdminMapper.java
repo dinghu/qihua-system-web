@@ -9,4 +9,6 @@ public interface AdminMapper {
     Admin selectByAdmin(Admin admin);
 
     List<Admin> selectAll();
+
+    int updateByPrimaryKey(Admin admin);
 }
