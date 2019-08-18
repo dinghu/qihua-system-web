@@ -37,6 +37,8 @@ public class Adminontroller {
     AdminService adminService;
     @Resource
     UserLogService userLogService;
+    @Resource
+    TeachersService teacherService;
 
     @ApiOperation(value = "新增管理员")
     @RequestMapping("/insert")
@@ -62,12 +64,18 @@ public class Adminontroller {
             return new ResultBean("200", "账号或密码错误", false, false);
         }
         //登录成功后 ；分配uuid；存在则不分配
-        if (TextUtils.isBlank(admin1.getUuid())) {
+        if (TextUtils.isEmpty(admin1.getUuid())) {
             admin1.setUuid(UUIDUtils.getUUID());
-            adminService.updateByPrimaryKey(admin);//设置uuid
+            adminService.updateByPrimaryKey(admin1);//设置uuid
         }
-        HashMap<String, String> data = new HashMap<>();
+        //是否授权
+        UserLog userLog = userLogService.selectByUuid(admin1.getUuid());
+        //是否注册了信息
+        Teachers teacher = teacherService.selectByUuId(admin1.getUuid());
+        HashMap<String, Object> data = new HashMap<>();
         data.put("uuid", admin1.getUuid());
+        data.put("userLog", userLog == null ? false : true);
+        data.put("teacher", teacher);
         return new ResultBean("200", "登陆成功", data, true);
     }
 
