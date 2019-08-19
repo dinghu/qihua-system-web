@@ -15,4 +15,6 @@ public interface RelaService {
     List<Rela> selectByAllSupId(Integer supId);
 
     JSONArray orderInfo(Integer num);
+
+    Rela selectBySubIdb(Integer subId);
 }
