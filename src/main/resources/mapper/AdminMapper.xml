@@ -14,12 +14,12 @@
       )
   </insert>
     <select id="selectAll" resultMap="BaseResultMap">
-    select admin, password, id
-    from admin =
+    select admin, password, id,uuid
+    from admin
   </select>
 
     <select id="selectByAdmin" resultMap="BaseResultMap" parameterType="com.rqh.system.domain.Admin">
-  select admin, password, id
+  select admin, password, id,uuid
   from admin
   where admin = #{admin,jdbcType=VARCHAR}
   and password = #{password,jdbcType=VARCHAR}
