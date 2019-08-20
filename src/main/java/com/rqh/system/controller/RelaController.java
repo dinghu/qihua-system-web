@@ -55,7 +55,7 @@ public class RelaController {
             } else {
 
                 Rela rela1 = relaService.selectBySubIdb(teachers1.gettId());
-                if (rela1 != null && 2 == rela1.getType()) {
+                if (rela1 != null && 2 == rela1.getType().intValue()) {
                     return new ResultBean("200", "此人已是合伙人！", false, false);
                 } else {
                     rela.setSubId(teachers1.gettId());

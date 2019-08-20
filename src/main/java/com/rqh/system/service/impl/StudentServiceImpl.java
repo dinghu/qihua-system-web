@@ -32,7 +32,7 @@ public class StudentServiceImpl implements StudentService {
     public int deleteByPrimaryKey(Integer sId) {
         try {
             studentMapper.deleteByPrimaryKey(sId);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
         return 0;
@@ -41,9 +41,9 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public int insert(Student record) {
         try {
-            if(studentMapper.selectByNid(record.getNid()) ==null) {
+            if (studentMapper.selectByNid(record.getNid()) == null) {
                 studentMapper.insert(record);
-            }else{
+            } else {
                 studentMapper.updateByPrimaryKey(record);
             }
         } catch (Exception e) {
@@ -55,9 +55,9 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student selectByPrimaryKey(Integer sId) {
         Student student;
-        try{
+        try {
             student = studentMapper.selectByPrimaryKey(sId);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
         return student;
@@ -66,9 +66,9 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> selectByName(String name) {
         List<Student> studentList = new ArrayList<>();
-        try{
+        try {
             studentList = studentMapper.selectByName(name);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
         return studentList;
@@ -76,9 +76,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public int updateByPrimaryKey(Student record) {
-        try{
+        try {
             studentMapper.updateByPrimaryKey(record);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
         return 0;
@@ -89,7 +89,7 @@ public class StudentServiceImpl implements StudentService {
         Student student;
         try {
             student = studentMapper.selectByNid(nid);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
         return student;
@@ -102,7 +102,7 @@ public class StudentServiceImpl implements StudentService {
         try {
             Teachers teachers = teachersMapper.selectByUuId(uuId);
             if (teachers != null) {
-                List <Rela> relaList = relaMapper.selectByAllSupId(teachers.gettId());
+                List<Rela> relaList = relaMapper.selectByAllSupId(teachers.gettId());
                 for (int i = 0; i < relaList.size(); i++) {
                     JSONObject jsonObject = new JSONObject();
                     if (!relaList.get(i).getType().equals(2)) {
@@ -115,9 +115,9 @@ public class StudentServiceImpl implements StudentService {
                         jsonObject.put("phone", student.getPhone());
                         jsonObject.put("sex", student.getSex());
                         jsonObject.put("sup", teachers.getName());
-                        jsonObject.put("type",s1);
+                        jsonObject.put("type", s1);
                         jsonArray.put(jsonObject);
-                    }else{
+                    } else {
                         JSONArray jsonArray1 = new JSONArray();
                         Teachers teachers1 = teachersMapper.selectByPrimaryKey(relaList.get(i).getSubId());
                         jsonObject.put("name", teachers1.getName());
@@ -127,11 +127,11 @@ public class StudentServiceImpl implements StudentService {
                         jsonObject.put("phone", teachers1.getPhone());
                         jsonObject.put("sex", teachers1.getSex());
                         jsonObject.put("sup", teachers.getName());
-                        jsonObject.put("type","合伙人");
-                        List <Rela> relaList1 = relaMapper.selectByAllSupId(teachers1.gettId());
-                        for(int j=0;j<relaList1.size();j++){
+                        jsonObject.put("type", "合伙人");
+                        List<Rela> relaList1 = relaMapper.selectByAllSupId(teachers1.gettId());
+                        for (int j = 0; j < relaList1.size(); j++) {
                             JSONObject jsonObject1 = new JSONObject();
-                            if(!relaList1.get(j).getType().equals(2)){
+                            if (!relaList1.get(j).getType().equals(2)) {
                                 Student student = studentMapper.selectByPrimaryKey(relaList1.get(j).getSubId());
                                 String s2 = typeMapper.selectById(relaList.get(j).getType()).getName();
                                 jsonObject1.put("name", student.getName());
@@ -141,9 +141,9 @@ public class StudentServiceImpl implements StudentService {
                                 jsonObject1.put("phone", student.getPhone());
                                 jsonObject1.put("sex", student.getSex());
                                 jsonObject1.put("sup", teachers.getName());
-                                jsonObject1.put("type",s2);
+                                jsonObject1.put("type", s2);
                                 jsonArray1.put(jsonObject1);
-                            }else{
+                            } else {
                                 JSONArray jsonArray2 = new JSONArray();
                                 Teachers teachers2 = teachersMapper.selectByPrimaryKey(relaList1.get(j).getSubId());
                                 jsonObject1.put("name", teachers2.getName());
@@ -153,11 +153,11 @@ public class StudentServiceImpl implements StudentService {
                                 jsonObject1.put("phone", teachers2.getPhone());
                                 jsonObject1.put("sex", teachers2.getSex());
                                 jsonObject1.put("sup", teachers1.getName());
-                                jsonObject1.put("type","合伙人");
-                                List <Rela> relaList2 = relaMapper.selectByAllSupId(teachers2.gettId());
-                                for(int k=0;k<relaList2.size();k++){
+                                jsonObject1.put("type", "合伙人");
+                                List<Rela> relaList2 = relaMapper.selectByAllSupId(teachers2.gettId());
+                                for (int k = 0; k < relaList2.size(); k++) {
                                     JSONObject jsonObject2 = new JSONObject();
-                                    if(!relaList2.get(k).getType().equals(2)){
+                                    if (!relaList2.get(k).getType().equals(2)) {
                                         Student student = studentMapper.selectByPrimaryKey(relaList2.get(k).getSubId());
                                         String s3 = typeMapper.selectById(relaList.get(k).getType()).getName();
                                         jsonObject2.put("name", student.getName());
@@ -167,38 +167,38 @@ public class StudentServiceImpl implements StudentService {
                                         jsonObject2.put("phone;", student.getPhone());
                                         jsonObject2.put("sex", student.getSex());
                                         jsonObject2.put("sup", teachers.getName());
-                                        jsonObject2.put("type",s3);
+                                        jsonObject2.put("type", s3);
                                         jsonArray2.put(jsonObject2);
                                     }
                                 }
-                                jsonObject1.put("sub",jsonArray2);
+                                jsonObject1.put("sub", jsonArray2);
                                 jsonArray1.put(jsonObject1);
                             }
                         }
-                        jsonObject.put("sub",jsonArray1);
+                        jsonObject.put("sub", jsonArray1);
                         jsonArray.put(jsonObject);
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
-//        System.out.println(jsonArray.toString());
+        System.out.println(jsonArray.toString());
         return jsonArray;
     }
 
     @Override
     public JSONArray selectByTid(String uuId) {
-        JSONArray jsonArray= new JSONArray();
+        JSONArray jsonArray = new JSONArray();
         try {
-            List<Rela> relaList = new ArrayList <>();
+            List<Rela> relaList = new ArrayList<>();
             Teachers teachers = teachersMapper.selectByUuId(uuId);
 //            System.out.println(teachers.gettId());
-            if(teachers!=null) {
-                relaList = relaMapper.selectByAllSupId(teachers.gettId() );
+            if (teachers != null) {
+                relaList = relaMapper.selectByAllSupId(teachers.gettId());
             }
-            for(int i=0;i<relaList.size();i++) {
-                if(relaList.get(i).getType()!=2) {
+            for (int i = 0; i < relaList.size(); i++) {
+                if (relaList.get(i).getType() != 2) {
                     Student student = studentMapper.selectByPrimaryKey(relaList.get(i).getSubId());
                     Type type = typeMapper.selectById(relaList.get(i).getType());
                     JSONObject jsonObject = new JSONObject();
@@ -214,7 +214,7 @@ public class StudentServiceImpl implements StudentService {
                 }
 
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
         return jsonArray;
