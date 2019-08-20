@@ -107,7 +107,8 @@ public class RelaServiceImpl implements RelaService {
                 if (teachers != null) {
                     all.put("teacherName", teachers.getName());
                 }
-                if (relaList.get(i).getType().equals(0)) {
+//                if (relaList.get(i).getType().equals(0))
+                if (!relaList.get(i).getType().equals(2)) {//合伙人
                     Student student = studentMapper.selectByPrimaryKey(relaList.get(i).getSubId());
                     if (student != null) {
                         all.put("studentName", student.getName());
@@ -132,7 +133,7 @@ public class RelaServiceImpl implements RelaService {
     }
 
     @Override
-    public Rela selectBySubIdb(Integer subId) {
+    public Rela selectBySubId(Integer subId) {
         Rela rela = null;
         try {
             relaMapper.selectBySubId(subId);

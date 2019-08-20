@@ -16,5 +16,5 @@ public interface RelaService {
 
     JSONArray orderInfo(Integer num);
 
-    Rela selectBySubIdb(Integer subId);
+    Rela selectBySubId(Integer subId);
 }

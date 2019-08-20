@@ -100,9 +100,13 @@ public class StudentServiceImpl implements StudentService {
     public JSONArray selectAllByTid(String uuId) {
         JSONArray jsonArray = new JSONArray();
         try {
+            System.out.println(uuId);
             Teachers teachers = teachersMapper.selectByUuId(uuId);
+            System.out.println(teachers);
             if (teachers != null) {
+                System.out.println(teachers);
                 List<Rela> relaList = relaMapper.selectByAllSupId(teachers.gettId());
+                System.out.println(relaList.size());
                 for (int i = 0; i < relaList.size(); i++) {
                     JSONObject jsonObject = new JSONObject();
                     if (!relaList.get(i).getType().equals(2)) {
@@ -181,7 +185,8 @@ public class StudentServiceImpl implements StudentService {
                 }
             }
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         System.out.println(jsonArray.toString());
         return jsonArray;
