@@ -23,7 +23,7 @@
     set type = #{type,jdbcType=INTEGER},
       sup_id = #{supId,jdbcType=INTEGER},
       sub_id = #{subId,jdbcType=INTEGER},
-       insertDate = #{insertdate,jdbcType=TIMESTAMP}
+      insertDate = #{insertdate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -36,10 +36,10 @@
     from rela
     where sup_id = #{supId,jdbcType=INTEGER}
   </select>
-  <select id="selectBySubId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPidAndSubId"  parameterType="map" resultMap="BaseResultMap">
     select id, type, sup_id, sub_id, insertDate
     from rela
-    where sub_id = #{subId,jdbcType=INTEGER}
+    where sub_id = #{subId,jdbcType=INTEGER} and  sup_id = #{supId,jdbcType=INTEGER}
   </select>
   <select id="orderDate" resultMap="BaseResultMap">
     select id, type, sup_id, sub_id, insertDate

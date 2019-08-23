@@ -53,8 +53,7 @@ public class RelaController {
             if (teachers1.gettUuid().equals(uuid)) {
                 return new ResultBean("200", "您不能添加自己为合伙人！", false, false);
             } else {
-
-                Rela rela1 = relaService.selectBySubId(teachers1.gettId());
+                Rela rela1 = relaService.selectByPidAndSubId(teachers.gettId(), teachers1.gettId());
                 if (rela1 != null && 2 == rela1.getType().intValue()) {
                     return new ResultBean("200", "此人已是合伙人！", false, false);
                 } else {
@@ -65,8 +64,6 @@ public class RelaController {
                     relaService.insert(rela);
                     return new ResultBean("200", "新增成功", true, true);
                 }
-
-
             }
         } else {
             return new ResultBean("200", "该招生老师未注册！", false, false);

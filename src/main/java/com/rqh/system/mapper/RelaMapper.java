@@ -1,6 +1,8 @@
 package com.rqh.system.mapper;
 
 import com.rqh.system.domain.Rela;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 public interface RelaMapper {
@@ -14,5 +16,5 @@ public interface RelaMapper {
 
     List<Rela> orderDate();
 
-    Rela selectBySubId(Integer subId);
+    Rela  selectByPidAndSubId(@Param("supId")Integer supId,@Param("subId") Integer subId);
 }

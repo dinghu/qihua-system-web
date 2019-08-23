@@ -133,10 +133,10 @@ public class RelaServiceImpl implements RelaService {
     }
 
     @Override
-    public Rela selectBySubId(Integer subId) {
+    public Rela selectByPidAndSubId(Integer supId, Integer subId) {
         Rela rela = null;
         try {
-            relaMapper.selectBySubId(subId);
+            rela = relaMapper.selectByPidAndSubId(supId,subId);
         } catch (Exception e) {
             e.printStackTrace();
         }
