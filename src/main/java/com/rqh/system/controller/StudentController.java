@@ -1,4 +1,4 @@
-package com.rqh.system.controller;
+﻿package com.rqh.system.controller;
 
 import com.rqh.system.bean.ResultBean;
 import com.rqh.system.domain.Rela;
@@ -24,8 +24,8 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/student",method = RequestMethod.POST)
-@Api(value = "UserLogController",description = "学生信息")
+@RequestMapping(value = "/student", method = RequestMethod.POST)
+@Api(value = "UserLogController", description = "学生信息")
 public class StudentController {
 
     @Resource
@@ -38,46 +38,47 @@ public class StudentController {
     @ApiOperation(value = "新增学生信息")
     @RequestMapping("/insert")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "uuId",value = "招生老师微信编号",required = true),
-            @ApiImplicitParam(name = "typeId",value = "类型编号",required = true)
+            @ApiImplicitParam(name = "uuId", value = "招生老师微信编号", required = true),
+            @ApiImplicitParam(name = "typeId", value = "类型编号", required = true)
     })
     @ResponseBody
     @CrossOrigin
-    public ResultBean insert(@RequestBody Student student, String uuId,Integer typeId){
-            Teachers teachers = teachersService.selectByUuId(uuId);
-            Rela rela = new Rela();
-            if(teachers!=null){
-                rela.setSupId(teachers.gettId());
-            }else {
-                return new ResultBean("200", "您尚未注册！", false);
-            }
-            Student student1 = studentService.selectByNid(student.getNid());
+    public ResultBean insert(@RequestBody Student student, String uuId, Integer typeId) {
+        Teachers teachers = teachersService.selectByUuId(uuId);
+        Rela rela = new Rela();
+        if (teachers != null) {
+            rela.setSupId(teachers.gettId());
+        } else {
+            return new ResultBean("200", "您尚未注册！", false);
+        }
+        Student student1 = studentService.selectByNid(student.getNid());
+//            Rela rela1 = relaService.selectBySubId(student1.getsId());
+        Rela rela1 = relaService.selectByPidAndSubId(teachers.gettId(), student1.getsId());
 //            System.out.println(student1);
-            if(student1==null) {
-                studentService.insert(student);
-                Student student2 = studentService.selectByNid(student.getNid());
-                rela.setSubId(student2.getsId());
-                rela.setType(typeId);
-                relaService.insert(rela);
-            }else{
-                return  new ResultBean("200","此人已被招入！",false);
-            }
-            return  new ResultBean("200","新增成功！",true);
-
+        if (student1 == null) {
+            studentService.insert(student);
+            Student student2 = studentService.selectByNid(student.getNid());
+            rela.setSubId(student2.getsId());
+            rela.setType(typeId);
+            relaService.insert(rela);
+        } else if (rela1 != null && rela1.getType().equals(typeId)) {
+            return new ResultBean("200", "此人已被招入！", false);
+        }
+        return new ResultBean("200", "新增成功！", true);
 
     }
 
 
     @ApiOperation(value = "删除学生信息")
     @RequestMapping("/deleteByPrimaryKey")
-    @ApiImplicitParam(name = "sId",value = "学生编号",required = true)
+    @ApiImplicitParam(name = "sId", value = "学生编号", required = true)
     @ResponseBody
     @CrossOrigin
-    public Boolean deleteByPrimaryKey(Integer sId){
+    public Boolean deleteByPrimaryKey(Integer sId) {
         try {
-           studentService.deleteByPrimaryKey(sId);
+            studentService.deleteByPrimaryKey(sId);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -86,14 +87,14 @@ public class StudentController {
 
     @ApiOperation(value = "查找我的所有学生信息")
     @RequestMapping("/selectByTid")
-    @ApiImplicitParam(name = "uuId",value = "招生老师微信编号",required = true)
+    @ApiImplicitParam(name = "uuId", value = "招生老师微信编号", required = true)
     @ResponseBody
     @CrossOrigin
-    public String selectByTid(String uuId){
-        JSONArray jsonArray= new JSONArray();
+    public String selectByTid(String uuId) {
+        JSONArray jsonArray = new JSONArray();
         try {
             jsonArray = studentService.selectByTid(uuId);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return jsonArray.toString();
@@ -101,14 +102,14 @@ public class StudentController {
 
     @ApiOperation(value = "查找我以及我所有招生老师的学生信息")
     @RequestMapping("/selectAllByTid")
-    @ApiImplicitParam(name = "uuId",value = "招生老师微信编号",required = true)
+    @ApiImplicitParam(name = "uuId", value = "招生老师微信编号", required = true)
     @ResponseBody
     @CrossOrigin
-    public String selectAllByTid(String uuId){
-        JSONArray jsonArray= new JSONArray();
+    public String selectAllByTid(String uuId) {
+        JSONArray jsonArray = new JSONArray();
         try {
             jsonArray = studentService.selectAllByTid(uuId);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return jsonArray.toString();
@@ -116,21 +117,21 @@ public class StudentController {
 
     @ApiOperation(value = "按学生姓名查找学生信息")
     @RequestMapping("/selectByName")
-    @ApiImplicitParam(name = "name",value = "学生姓名",required = true)
+    @ApiImplicitParam(name = "name", value = "学生姓名", required = true)
     @ResponseBody
     @CrossOrigin
     public List<Student> selectByPrimaryKey(String name) {
-        List<Student> studentList = new ArrayList <>();
-        try{
+        List<Student> studentList = new ArrayList<>();
+        try {
             studentList = studentService.selectByName(name);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return studentList;
     }
 
     @InitBinder
-    public void initBinder(ServletRequestDataBinder binder){
+    public void initBinder(ServletRequestDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
