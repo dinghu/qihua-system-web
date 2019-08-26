@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rqh.system.mapper.RelaMapper">
-  <resultMap id="BaseResultMap" type="com.rqh.system.domain.Rela">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="sup_id" jdbcType="INTEGER" property="supId" />
-    <result column="sub_id" jdbcType="INTEGER" property="subId" />
-    <result column="insertDate" jdbcType="TIMESTAMP" property="insertdate" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <resultMap id="BaseResultMap" type="com.rqh.system.domain.Rela">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="sup_id" jdbcType="INTEGER" property="supId"/>
+        <result column="sub_id" jdbcType="INTEGER" property="subId"/>
+        <result column="insertDate" jdbcType="TIMESTAMP" property="insertdate"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from rela
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rqh.system.domain.Rela">
+    <insert id="insert" parameterType="com.rqh.system.domain.Rela">
     insert into rela (id, type, sup_id, 
       sub_id, insertDate)
     values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{supId,jdbcType=INTEGER}, 
       #{subId,jdbcType=INTEGER}, #{insertdate,jdbcType=TIMESTAMP})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.rqh.system.domain.Rela">
+    <update id="updateByPrimaryKey" parameterType="com.rqh.system.domain.Rela">
     update rela
     set type = #{type,jdbcType=INTEGER},
       sup_id = #{supId,jdbcType=INTEGER},
@@ -26,27 +26,34 @@
       insertDate = #{insertdate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, type, sup_id, sub_id, insertDate
     from rela
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectBySupId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectBySupId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, type, sup_id, sub_id, insertDate
     from rela
     where sup_id = #{supId,jdbcType=INTEGER}
   </select>
-  <select id="selectByPidAndSubId"  parameterType="map" resultMap="BaseResultMap">
+
+    <select id="selectBySubIdAndType" parameterType="map" resultMap="BaseResultMap">
+    select id, type, sup_id, sub_id, insertDate
+    from rela
+    where sub_id = #{subId,jdbcType=INTEGER} and type =  #{type,jdbcType=INTEGER}
+  </select>
+
+    <select id="selectByPidAndSubId" parameterType="map" resultMap="BaseResultMap">
     select id, type, sup_id, sub_id, insertDate
     from rela
     where sub_id = #{subId,jdbcType=INTEGER} and  sup_id = #{supId,jdbcType=INTEGER}
   </select>
-  <select id="orderDate" resultMap="BaseResultMap">
+    <select id="orderDate" resultMap="BaseResultMap">
     select id, type, sup_id, sub_id, insertDate
     from rela
     order by insertDate
   </select>
-  <select id="selectByAllSupId" resultMap="BaseResultMap">
+    <select id="selectByAllSupId" resultMap="BaseResultMap">
 --     SELECT * FROM rela WHERE FIND_IN_SET(sub_id, getChildList(sub_id))
  select * from rela
  where sup_id = #{supId,jdbcType=INTEGER}

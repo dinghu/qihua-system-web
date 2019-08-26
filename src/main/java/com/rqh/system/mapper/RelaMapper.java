@@ -16,5 +16,7 @@ public interface RelaMapper {
 
     List<Rela> orderDate();
 
-    Rela  selectByPidAndSubId(@Param("supId")Integer supId,@Param("subId") Integer subId);
+    Rela selectByPidAndSubId(@Param("supId") Integer supId, @Param("subId") Integer subId);
+
+    Rela selectBySubIdAndType(@Param("subId") Integer subId, @Param("type") Integer type);
 }

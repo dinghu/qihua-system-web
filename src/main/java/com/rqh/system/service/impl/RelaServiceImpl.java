@@ -136,10 +136,15 @@ public class RelaServiceImpl implements RelaService {
     public Rela selectByPidAndSubId(Integer supId, Integer subId) {
         Rela rela = null;
         try {
-            rela = relaMapper.selectByPidAndSubId(supId,subId);
+            rela = relaMapper.selectByPidAndSubId(supId, subId);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return rela;
+    }
+
+    @Override
+    public Rela selectBySubIdAndType(Integer subId, Integer type) {
+        return relaMapper.selectBySubIdAndType(subId, type);
     }
 }

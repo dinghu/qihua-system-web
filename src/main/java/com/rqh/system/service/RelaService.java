@@ -18,4 +18,6 @@ public interface RelaService {
     JSONArray orderInfo(Integer num);
 
     Rela  selectByPidAndSubId(Integer supId,Integer subId);
+
+    Rela selectBySubIdAndType(Integer subId,Integer type);
 }
