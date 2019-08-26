@@ -1,4 +1,4 @@
-﻿package com.rqh.system.controller;
+package com.rqh.system.controller;
 
 import com.rqh.system.bean.ResultBean;
 import com.rqh.system.domain.Rela;
@@ -52,7 +52,6 @@ public class StudentController {
             return new ResultBean("200", "您尚未注册！", false);
         }
         Student student1 = studentService.selectByNid(student.getNid());
-//            Rela rela1 = relaService.selectBySubId(student1.getsId());
         Rela rela1 = relaService.selectByPidAndSubId(teachers.gettId(), student1.getsId());
 //            System.out.println(student1);
         if (student1 == null) {
@@ -63,8 +62,11 @@ public class StudentController {
             relaService.insert(rela);
         } else if (rela1 != null && rela1.getType().equals(typeId)) {
             return new ResultBean("200", "此人已被招入！", false);
+        } else {
+            return new ResultBean("200", "此人已被招入！", false);
         }
         return new ResultBean("200", "新增成功！", true);
+
 
     }
 
