@@ -52,7 +52,11 @@ public class StudentController {
             return new ResultBean("200", "您尚未注册！", false);
         }
         Student student1 = studentService.selectByNid(student.getNid());
-        Rela rela1 = relaService.selectBySubIdAndType(student1.getsId(),typeId);//teachers.gettId(),
+        Rela rela1 = null;//relaService.selectBySubIdAndType(student1.getsId(),typeId);//teachers.gettId(),
+
+        if (student1 != null) {
+            rela1 = relaService.selectBySubIdAndType(student1.getsId(), typeId);//teachers.gettId(),
+        }
 //            System.out.println(student1);
         if (student1 == null) {
             studentService.insert(student);

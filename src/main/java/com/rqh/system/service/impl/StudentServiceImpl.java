@@ -124,6 +124,9 @@ public class StudentServiceImpl implements StudentService {
                     } else {
                         JSONArray jsonArray1 = new JSONArray();
                         Teachers teachers1 = teachersMapper.selectByPrimaryKey(relaList.get(i).getSubId());
+                        if (teachers1 == null){
+                            continue;
+                        }
                         jsonObject.put("name", teachers1.getName());
                         jsonObject.put("workId", teachers1.getWorkId());
                         jsonObject.put("place", teachers1.getPlace());
@@ -133,11 +136,14 @@ public class StudentServiceImpl implements StudentService {
                         jsonObject.put("sup", teachers.getName());
                         jsonObject.put("type", "合伙人");
                         List<Rela> relaList1 = relaMapper.selectByAllSupId(teachers1.gettId());
+                        if (relaList1 == null){
+                            continue;
+                        }
                         for (int j = 0; j < relaList1.size(); j++) {
                             JSONObject jsonObject1 = new JSONObject();
                             if (!relaList1.get(j).getType().equals(2)) {
                                 Student student = studentMapper.selectByPrimaryKey(relaList1.get(j).getSubId());
-                                String s2 = typeMapper.selectById(relaList.get(j).getType()).getName();
+                                String s2 = typeMapper.selectById(relaList1.get(j).getType()).getName();
                                 jsonObject1.put("name", student.getName());
                                 jsonObject1.put("graduate", student.getGraduate());
                                 jsonObject1.put("major", student.getMajor());
@@ -150,6 +156,9 @@ public class StudentServiceImpl implements StudentService {
                             } else {
                                 JSONArray jsonArray2 = new JSONArray();
                                 Teachers teachers2 = teachersMapper.selectByPrimaryKey(relaList1.get(j).getSubId());
+                                if (teachers2 == null){
+                                    continue;
+                                }
                                 jsonObject1.put("name", teachers2.getName());
                                 jsonObject1.put("workId", teachers2.getWorkId());
                                 jsonObject1.put("place", teachers2.getPlace());
@@ -159,11 +168,14 @@ public class StudentServiceImpl implements StudentService {
                                 jsonObject1.put("sup", teachers1.getName());
                                 jsonObject1.put("type", "合伙人");
                                 List<Rela> relaList2 = relaMapper.selectByAllSupId(teachers2.gettId());
+                                if (relaList2 == null){
+                                    continue;
+                                }
                                 for (int k = 0; k < relaList2.size(); k++) {
                                     JSONObject jsonObject2 = new JSONObject();
                                     if (!relaList2.get(k).getType().equals(2)) {
                                         Student student = studentMapper.selectByPrimaryKey(relaList2.get(k).getSubId());
-                                        String s3 = typeMapper.selectById(relaList.get(k).getType()).getName();
+                                        String s3 = typeMapper.selectById(relaList2.get(k).getType()).getName();
                                         jsonObject2.put("name", student.getName());
                                         jsonObject2.put("graduate", student.getGraduate());
                                         jsonObject2.put("major", student.getMajor());

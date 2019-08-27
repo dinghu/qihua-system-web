@@ -98,6 +98,12 @@ public class RelaServiceImpl implements RelaService {
         JSONArray jsonArray = new JSONArray();
         try {
             List<Rela> relaList = relaMapper.orderDate();
+            if (relaList == null) {
+                return jsonArray;
+            }
+            if (num == null) {
+                num = 3;
+            }
             int x = relaList.size();
             int l = relaList.size() > num ? num : relaList.size();
             for (int i = x - 1; i >= x - l; i--) {
