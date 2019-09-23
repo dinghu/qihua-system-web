@@ -16,6 +16,8 @@ public interface TeachersService {
 
     List<Teachers> selectByName(String name);
 
+    Teachers selectByNameAndNid(String name, String nid);
+
     Teachers selectByUuId(@Param("tUuId") String uuId);
 
     Teachers selectByNid(String nid);

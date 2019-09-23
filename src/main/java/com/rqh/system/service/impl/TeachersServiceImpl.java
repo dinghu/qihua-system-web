@@ -102,4 +102,15 @@ public class TeachersServiceImpl implements TeachersService {
         }
         return teachers;
     }
+
+    @Override
+    public Teachers selectByNameAndNid(String name, String nid) {
+        Teachers teachers;
+        try {
+            teachers = teacherMapper.selectByNameAndNid(name,nid);
+        }catch (Exception e){
+            throw e;
+        }
+        return teachers;
+    }
 }

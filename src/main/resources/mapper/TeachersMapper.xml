@@ -69,6 +69,14 @@
     from teachers
     where name = #{name,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectByNameAndNid" parameterType="map"  resultMap="BaseResultMap">
+    select t_id, t_uuid, name, nick, sex, work_id, nid, birth, hiredate, phone, email,
+    place, last_time,inv_code
+    from teachers
+    where name = #{name,jdbcType=VARCHAR} and nid = #{nid,jdbcType=VARCHAR}
+  </select>
+
   <select id="selectByNid" parameterType="java.lang.String"  resultMap="BaseResultMap">
     select t_id, t_uuid, name, nick, sex, work_id, nid, birth, hiredate, phone, email,
     place, last_time,inv_code
